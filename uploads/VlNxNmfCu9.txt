@@ -1,0 +1,15 @@
+настройка конфига: 
+
+
+
+
+настройка контроллера:
+убрать Crsf
+modelclass= '';
+Authentication 
+Filters -> cors
+Controllers->cors
+поменять origin, и добавить в массив auth httpbeareauth и для каких экшнов
+fn actions
+
+
