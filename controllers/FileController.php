@@ -32,7 +32,7 @@ class FileController extends \yii\rest\ActiveController
             'class' => Cors::class,
             'cors' => [
                 'Origin' => [(isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : 'http://' . $_SERVER['REMOTE_ADDR'])],
-                'Access-Control-Request-Method' => ['POST', 'PUT', 'GET', 'PATCH', 'DELETE'],
+                'Access-Control-Request-Method' => ['POST', 'PUT', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
                 'Access-Control-Request-Headers' => ['Content-type', 'Authorization'],
             ],
             'actions' => [
@@ -91,6 +91,7 @@ class FileController extends \yii\rest\ActiveController
                     $model->file_id = yii::$app->security->generateRandomString(10);
                     $i = 1;
                     if (!$model->isUniqueName($model->name, $identity->id)) {
+                        // cоздания уникального имени для файла
                         $name = $model->name;
                         while (!$model->isUniqueName($name, $identity->id)) {
                             $name = $model->name . "($i)." . $model->extension;
@@ -105,6 +106,7 @@ class FileController extends \yii\rest\ActiveController
 
                     if ($model->save(false)) {
 
+                        // создания записи в сводной таблицы юзер-файл-роль
                         $author = new Authors();
                         $author->file_id = File::findOne(['file_id' => $model->file_id])->id;
                         $author->user_id = $identity->id;
@@ -157,8 +159,7 @@ class FileController extends \yii\rest\ActiveController
                 $author = Authors::findOne(['file_id' => $file->id, 'user_id' => $identity->id]);
                 if ($author) {
                     $dir = Yii::getAlias('@app/uploads/' . $file->file_id . '.' . $file->extension);
-                    // var_dump($dir);
-                    // die;
+                   
                     if (file_exists($dir)) {
                         Yii::$app->response->statusCode = 200;
                         Yii::$app->response->sendFile($dir)->send();

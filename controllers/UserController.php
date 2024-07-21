@@ -25,7 +25,7 @@ class UserController extends \yii\rest\ActiveController
             'class' => Cors::class,
             'cors' => [
                 'Origin' => [(isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : 'http://' . $_SERVER['REMOTE_ADDR'])],
-                'Access-Control-Request-Method' => ['POST', 'PUT', 'GET', 'PATCH', 'DELETE'],
+                'Access-Control-Request-Method' => ['POST','GET', 'OPTIONS'],
                 'Access-Control-Request-Headers' => ['Content-type', 'Authorization'],
             ],
             'actions' => [
