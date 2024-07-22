@@ -451,12 +451,13 @@ class FileController extends \yii\rest\ActiveController
         }
         return $result;
     }
-
+    
     public function actionCheckAll()
     {
-
+        
         $identity = yii::$app->user->identity;
         if ($identity) {
+            $result = [];
             $files = File::find()
                 ->select(
                     [
@@ -513,7 +514,9 @@ class FileController extends \yii\rest\ActiveController
     {
 
         $identity = yii::$app->user->identity;
+        
         if ($identity) {
+            $result = [];
             $files = File::find()
                 ->select(
                     [
