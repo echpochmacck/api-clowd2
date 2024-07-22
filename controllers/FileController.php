@@ -55,14 +55,13 @@ class FileController extends \yii\rest\ActiveController
                 'delete-co' => [
                     'Access-Control-Allow-Creditionals' => true,
                 ],
+                'check-access' => [
+                    'Access-Control-Allow-Creditionals' => true,
+                ],
+                'check-all' => [
+                    'Access-Control-Allow-Creditionals' => true,
+                ],
             ],
-            'check-all' => [
-                'Access-Control-Allow-Creditionals' => true,
-            ],
-            'check-access' => [
-                'Access-Control-Allow-Creditionals' => true,
-            ],
-
 
         ];
         $auth = [
@@ -159,7 +158,7 @@ class FileController extends \yii\rest\ActiveController
                 $author = Authors::findOne(['file_id' => $file->id, 'user_id' => $identity->id]);
                 if ($author) {
                     $dir = Yii::getAlias('@app/uploads/' . $file->file_id . '.' . $file->extension);
-                   
+
                     if (file_exists($dir)) {
                         Yii::$app->response->statusCode = 200;
                         Yii::$app->response->sendFile($dir)->send();
